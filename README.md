@@ -1,1 +1,0 @@
-# regex2smt-lib
