@@ -31,9 +31,9 @@ import com.github.hycos.regex2smtlib.translator.exception.TranslationException;
 public interface TranslatorIface {
     /**
      * translates regular expression string to SMT-LIB format
-     * @param regex
+     * @param regex regular expression string
      * @return regular expression in SMT-LIB format
-     * @throws TranslationException
+     * @throws TranslationException somehting went wrong during the translation
      */
     String translate(String regex) throws TranslationException;
 

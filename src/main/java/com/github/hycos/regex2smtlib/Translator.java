@@ -74,9 +74,9 @@ public enum Translator {
      * translate a regular expression to a specific format
      * @param format format to which the regular expression should be converted
      * @param regex regular expression string in PCRE format
-     * @return
-     * @throws FormatNotAvailableException
-     * @throws TranslationException
+     * @return smt constraint representing regex
+     * @throws FormatNotAvailableException specified format not available
+     * @throws TranslationException somehting went wrong during the translation
      */
     public String translate(String format, String regex) throws
             FormatNotAvailableException, TranslationException {
@@ -97,9 +97,9 @@ public enum Translator {
      * @param format format to which the regular expression should be converted
      * @param regex regular expression string in PCRE format
      * @param vname variable name which should be matched against regex
-     * @return
-     * @throws FormatNotAvailableException
-     * @throws TranslationException
+     * @return smt conjunct matching vname against regex
+     * @throws FormatNotAvailableException specified format not available
+     * @throws TranslationException somehting went wrong during the translation
      */
     public String tranlateToConjunct(String format, String regex, String
             vname) throws
@@ -113,9 +113,9 @@ public enum Translator {
      * @param format format to which the regular expression should be converted
      * @param regex regular expression string in PCRE format
      * @param vname variable name which should be matched against regex
-     * @return
-     * @throws FormatNotAvailableException
-     * @throws TranslationException
+     * @return smt constraint matching vname against regex
+     * @throws FormatNotAvailableException specified format not available
+     * @throws TranslationException somehting went wrong during the translation
      */
     public String translateToConstraint(String format, String regex, String
             vname) throws
