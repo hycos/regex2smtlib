@@ -71,7 +71,7 @@ can be directly plugged into the respective constraint solver (in this case
 (get-model)
 ```
 
-The `Translator` class has to other member function which may be useful:
+The `Translator` class has two other member functions which may be useful:
 
 ```java
 // generate SMT-LIB regex string only
