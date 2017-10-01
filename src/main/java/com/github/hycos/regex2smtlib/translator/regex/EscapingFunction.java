@@ -24,10 +24,8 @@
  * SOFTWARE.
  **/
 
-package com.github.hycos.regex2smtlib.translator.exception;
+package com.github.hycos.regex2smtlib.translator.regex;
 
-public class FormatNotAvailableException extends Exception {
-    public FormatNotAvailableException(String msg){
-        super(msg);
-    }
+public interface EscapingFunction {
+    String escape(String input);
 }

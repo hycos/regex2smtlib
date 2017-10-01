@@ -24,10 +24,29 @@
  * SOFTWARE.
  **/
 
-package com.github.hycos.regex2smtlib.translator.exception;
+package com.github.hycos.regex2smtlib.translator;
 
-public class FormatNotAvailableException extends Exception {
-    public FormatNotAvailableException(String msg){
-        super(msg);
-    }
+import com.github.hycos.regex2smtlib.translator.exception.TranslationException;
+
+public interface TranslatorIface {
+    /**
+     * translates regular expression string to SMT-LIB format
+     * @param regex
+     * @return regular expression in SMT-LIB format
+     * @throws TranslationException
+     */
+    String translate(String regex) throws TranslationException;
+
+    /**
+     * return a translation map, i.e., a mapping table that maps
+     * regular expression operations to native operations
+     * @return translation map
+     */
+    TranslationMap getTmap();
+
+    /**
+     * get the name of the translator
+     * @return String that uniquely identifies the translator
+     */
+    String getName();
 }

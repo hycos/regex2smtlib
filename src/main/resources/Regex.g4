@@ -33,7 +33,7 @@ grammar Regex;
 // are copied from the official PCRE man pages (last updated: 
 // 10 January 2012): http://www.pcre.org/pcre.txt
 parse
- : alternation EOF
+ : alternation | intersection EOF
  ;
 
 // ALTERNATION
@@ -41,6 +41,12 @@ parse
 //         expr|expr|expr...
 alternation
  : expr ('|' expr)*
+ ;
+
+// INTERSECTION
+// added to suport isect functionality
+intersection
+ : expr ('&&' expr)+
  ;
 
 expr

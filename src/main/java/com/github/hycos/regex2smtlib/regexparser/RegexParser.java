@@ -1,3 +1,30 @@
+/**
+ * regex2smtlib: A regex to smtlib translator
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Julian Thome <julian.thome.de@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ **/
+
+
 package com.github.hycos.regex2smtlib.regexparser;
 
 import org.slf4j.Logger;
@@ -23,7 +50,7 @@ public enum RegexParser {
     final static Logger LOGGER = LoggerFactory.getLogger(RegexParser.class);
 
     private static Set<String> filter = new HashSet<String>(Arrays.asList(
-            new String[]{"alternation",
+            new String[]{"alternation", "intersection",
             "expr", "literal",
             "quantifier", "atom", "letter", "number", "element",
             "character_class", "cc_atom", "cc_literal"
@@ -59,7 +86,16 @@ public enum RegexParser {
     }
 
 
-    public ParseTree parse(String regex) throws IllegalWorkflowException, ParsingException {
+    /**
+     * parse regex string and return corresponding parse tree
+     * @param regex regular expression string
+     * @return parse tree of regex
+     * @throws IllegalWorkflowException there went something wrong during
+     * parser generation
+     * @throws ParsingException regular expression is not in PRCRE format
+     */
+    public ParseTree parse(String regex) throws IllegalWorkflowException,
+            ParsingException {
         gp.parse(regex);
         return dlist.getParseTree();
     }

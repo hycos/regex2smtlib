@@ -24,10 +24,24 @@
  * SOFTWARE.
  **/
 
-package com.github.hycos.regex2smtlib.translator.exception;
+package com.github.hycos.regex2smtlib.translator;
 
-public class FormatNotAvailableException extends Exception {
-    public FormatNotAvailableException(String msg){
-        super(msg);
+import com.github.hycos.regex2smtlib.translator.exception.TranslationException;
+import com.github.hycos.regex2smtlib.translator.regex.RegexTranslator;
+import org.snt.inmemantlr.exceptions.IllegalWorkflowException;
+import org.snt.inmemantlr.exceptions.ParseTreeProcessorException;
+import org.snt.inmemantlr.exceptions.ParsingException;
+
+public abstract class AbstractTranslator implements TranslatorIface {
+
+    public String translate(String regex) throws TranslationException {
+        try {
+            return new RegexTranslator(regex, getTmap()).process();
+        } catch (IllegalWorkflowException | ParsingException | ParseTreeProcessorException e) {
+            throw new TranslationException(e.getMessage());
+        }
     }
+
+    public abstract TranslationMap getTmap();
+    public abstract String getName();
 }

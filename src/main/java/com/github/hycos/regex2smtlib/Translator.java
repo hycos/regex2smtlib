@@ -1,11 +1,40 @@
+/**
+ * regex2smtlib: A regex to smtlib translator
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Julian Thome <julian.thome.de@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ **/
+
 package com.github.hycos.regex2smtlib;
 
-import com.github.hycos.regex2smtlib.translator.CVC4Translator;
-import com.github.hycos.regex2smtlib.translator.TranslatorInterface;
-import com.github.hycos.regex2smtlib.translator.Z3Str2Translator;
-import com.github.hycos.regex2smtlib.translator.Z3Translator;
+import com.github.hycos.regex2smtlib.translator.*;
 import com.github.hycos.regex2smtlib.translator.exception.FormatNotAvailableException;
 import com.github.hycos.regex2smtlib.translator.exception.TranslationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.trimou.engine.MustacheEngine;
+import org.trimou.engine.MustacheEngineBuilder;
+import org.trimou.engine.locator.ClassPathTemplateLocator;
+import org.trimou.engine.locator.TemplateLocator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,21 +45,39 @@ public enum Translator {
 
     INSTANCE;
 
-    private static Map<String, TranslatorInterface> translators = new
+    final static Logger LOGGER = LoggerFactory.getLogger(Translator.class);
+
+    private static Map<String, AbstractTranslator> translators = new
             HashMap<>();
 
 
+    private static void addTranslators(AbstractTranslator... trans) {
+        for (AbstractTranslator tran : trans) {
+            translators.put(tran.getName(), tran);
+        }
+    }
+
     static {
-        translators.put(Z3Translator.INSTANCE.getName(), Z3Translator.INSTANCE);
-        translators.put(CVC4Translator.INSTANCE.getName(), CVC4Translator.INSTANCE);
-        translators.put(Z3Str2Translator.INSTANCE.getName(), Z3Str2Translator.INSTANCE);
+        addTranslators(new CVC4Translator(), new Z3Str2Translator(), new Z3Translator());
     }
 
 
+    /**
+     * show all availabe formats to which a regular expression can be converted
+     * @return set of available formats
+     */
     public Set<String> getAvailableFormats() {
         return new TreeSet(translators.keySet());
     }
 
+    /**
+     * translate a regular expression to a specific format
+     * @param format format to which the regular expression should be converted
+     * @param regex regular expression string in PCRE format
+     * @return
+     * @throws FormatNotAvailableException
+     * @throws TranslationException
+     */
     public String translate(String format, String regex) throws
             FormatNotAvailableException, TranslationException {
 
@@ -44,18 +91,62 @@ public enum Translator {
     }
 
 
-    public String translate(String format, String regex, String vname) throws
+    /**
+     * translate a regular expression to a specific format and generate
+     * a conjunct
+     * @param format format to which the regular expression should be converted
+     * @param regex regular expression string in PCRE format
+     * @param vname variable name which should be matched against regex
+     * @return
+     * @throws FormatNotAvailableException
+     * @throws TranslationException
+     */
+    public String translateToConjunt(String format, String regex, String
+            vname) throws
             FormatNotAvailableException, TranslationException {
 
         return "";
     }
 
-    public String translateAndGenerateConstraint(String format, String regex,
-                                             String vname) throws
+    /**
+     * translate a regular expression to a specific format and generate
+     * a constraint
+     * @param format format to which the regular expression should be converted
+     * @param regex regular expression string in PCRE format
+     * @param vname variable name which should be matched against regex
+     * @return
+     * @throws FormatNotAvailableException
+     * @throws TranslationException
+     */
+    public String translateToConstraint(String format, String regex, String
+            vname) throws
             FormatNotAvailableException, TranslationException {
-
-        return "";
+        return render(format, translate(format,regex), vname);
     }
+
+    private String render(String format, String smtregex, String vname) {
+
+        TemplateLocator locator = ClassPathTemplateLocator.builder(10)
+                .setRootPath(".").setSuffix("smt").build();
+
+
+        MustacheEngine engine = MustacheEngineBuilder
+                .newBuilder()
+                .addTemplateLocator(locator)
+                .build();
+
+        HashMap<String,String> data = new HashMap<>();
+
+        data.put(format, format);
+        data.put("vname", vname);
+        data.put("membership", translators.get(format).getTmap().get
+                (TranslationMap.Element.MEMBERSHIP));
+        data.put("smtregex", smtregex);
+        String out = engine.getMustache("template").render(data);
+
+        return out;
+    }
+
 
 
 
