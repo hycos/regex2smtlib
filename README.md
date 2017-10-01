@@ -1,9 +1,8 @@
 # regex2smtlib
 
-regex2smtlib is a tool for generating constraints in ([SMT-LIB
-format](http://smtlib.cs.uiowa.edu/language.shtml)) from Perl compatible
-regular expressions strings. For the time being Z3, Z3-str2 and CVC4 are
-supported. At the moment, the input formats for
+regex2smtlib is a tool for generating constraints in [SMT-LIB
+format](http://smtlib.cs.uiowa.edu/language.shtml) from Perl compatible
+regular expressions strings. At the moment, the input formats for
 [Z3](https://github.com/z3prover/z3),
 [Z3-str2](https://sites.google.com/site/z3strsolver/) and
 [CVC4](http://cvc4.cs.stanford.edu/web/) are supported.
