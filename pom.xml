@@ -21,14 +21,15 @@
         <commonslang.version>3.5</commonslang.version>
     </properties>
 
+
     <licenses>
         <license>
-            <name>EUPL</name>
-            <url>https://joinup.ec.europa.eu/sites/default/files/eupl1.1.-licence-en_0.pdf</url>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
 
-    <developers>
+       <developers>
         <developer>
             <name>Julian Thomé</name>
             <email>julian.thome.de@gmail.com</email>
@@ -36,12 +37,12 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/hycos/regex2smt.git
+        <connection>scm:git:git://github.com/hycos/regex2smtlib.git
         </connection>
         <developerConnection>
             scm:git:ssh://github.com:hycos/cnetwork.git
         </developerConnection>
-        <url>https://github.com/hycos/regex2smt/tree/master</url>
+        <url>https://github.com/hycos/regex2smtlib/tree/master</url>
     </scm>
 
     <distributionManagement>
