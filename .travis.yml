@@ -1,0 +1,15 @@
+language: java
+
+sudo : false
+
+services:
+  - docker
+        
+jdk:
+  - oraclejdk8
+
+install:
+  - mvn clean package
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
