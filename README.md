@@ -15,14 +15,14 @@ supported. At the moment, the input formats for
 [![Maven](https://maven-badges.herokuapp.com/maven-central/com.github.hycos/regex2smtlib/badge.svg)][maven]
 [![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.github.hycos/regex2smtlib/badge.svg)][javadoc]
 [![Linux Build Status](https://img.shields.io/travis/hycos/regex2smtlib/master.svg?label=Linux%20build)][travis]
-[![Test Coverage](https://codecov.io/gh/hycos/cnetwork/branch/master/graph/badge.svg)][coverage]
+[![Test Coverage](https://codecov.io/gh/hycos/regex2smtlib/branch/master/graph/badge.svg)][coverage]
 
 [licence]: https://opensource.org/licenses/mit
 [language]: https://www.java.com
-[maven]: https://maven-badges.herokuapp.com/maven-central/com.github.hycos/cnetwork
-[javadoc]: http://www.javadoc.io/doc/com.github.hycos/cnetwork
-[travis]: https://travis-ci.org/hycos/cnetwork
-[coverage]: https://codecov.io/gh/hycos/cnetwork
+[maven]: https://maven-badges.herokuapp.com/maven-central/com.github.hycos/regex2smtlib
+[javadoc]: http://www.javadoc.io/doc/com.github.hycos/regex2smtlib
+[travis]: https://travis-ci.org/hycos/regex2smtlib
+[coverage]: https://codecov.io/gh/hycos/regex2smtlib
 
 # TOC
 
@@ -45,6 +45,7 @@ using the following dependency in the `pom.xml` file.
     <version>1.0-SNAPSHOT</version>
 </dependency>
 ```
+
 
 # API Usage
 
