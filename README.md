@@ -46,6 +46,8 @@ using the following dependency in the `pom.xml` file.
 </dependency>
 ```
 
+Please note that for running `mvn test`, [Docker](https://www.docker.com/) has
+to be present on your system.
 
 # API Usage
 
