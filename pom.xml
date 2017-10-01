@@ -42,7 +42,7 @@
         <connection>scm:git:git://github.com/hycos/regex2smtlib.git
         </connection>
         <developerConnection>
-            scm:git:ssh://github.com:hycos/cnetwork.git
+            scm:git:ssh://github.com:hycos/regex2smtlib.git
         </developerConnection>
         <url>https://github.com/hycos/regex2smtlib/tree/master</url>
     </scm>
