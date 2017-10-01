@@ -187,8 +187,8 @@ public class RegexTranslator extends AbstractRegexTranslator {
 
 
                         if (matcher.matches()) {
-                            LOGGER.debug("group 1 {}", matcher.group(1));
-                            LOGGER.debug("group 2 {}", matcher.group(2));
+                            //LOGGER.debug("group 1 {}", matcher.group(1));
+                            //LOGGER.debug("group 2 {}", matcher.group(2));
 
                             String grp1 = matcher.group(1);
                             String grp2 = matcher.group(2);
@@ -200,7 +200,7 @@ public class RegexTranslator extends AbstractRegexTranslator {
                             }
 
 
-                            LOGGER.debug("min {}, max {}", min,max);
+                            //LOGGER.debug("min {}, max {}", min,max);
                             String smin = "";
                             String sran = "";
 
@@ -235,7 +235,6 @@ public class RegexTranslator extends AbstractRegexTranslator {
 
 
                             smap.put(n, sran);
-                            LOGGER.info("min " + min + " max" + max);
                         }
                     }
                 }

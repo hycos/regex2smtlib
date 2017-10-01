@@ -1,3 +1,30 @@
+/**
+ * regex2smtlib: A regex to smtlib translator
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2017 Julian Thome <julian.thome.de@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ **/
+
+
 import com.github.hycos.regex2smtlib.Translator;
 import com.github.hycos.regex2smtlib.translator.exception.FormatNotAvailableException;
 import com.github.hycos.regex2smtlib.translator.exception.TranslationException;
@@ -10,6 +37,7 @@ import org.testcontainers.containers.Container;
 import org.testcontainers.containers.GenericContainer;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -97,7 +125,7 @@ public class TestTranslator {
         String file = "/tmp/" + "f" + constraint.hashCode() + ".smt2";
         String cmd = "echo \'" + constraint + "\' > " + file + " && " + "z3 " + file;
         try {
-            result = z3.execInContainer("/bin/bash", "-c" ,cmd);
+            result = z3.execInContainer("/bin/bash", "-c", cmd);
         } catch (IOException | InterruptedException e) {
             LOGGER.error("error {}", e.getMessage());
             Assert.assertTrue(false);
@@ -110,7 +138,7 @@ public class TestTranslator {
         String constraint = translateToCVC4(rexp);
         String cmd = "echo \'" + constraint + "' | cvc4 --lang smt2";
         try {
-            result = cvc4.execInContainer("/bin/bash", "-c" ,cmd);
+            result = cvc4.execInContainer("/bin/bash", "-c", cmd);
         } catch (IOException | InterruptedException e) {
             LOGGER.error("error {}", e.getMessage());
             Assert.assertTrue(false);
@@ -121,7 +149,7 @@ public class TestTranslator {
 
     @Test
     public void testCVC4() {
-        for(String p : patterns){
+        for (String p : patterns) {
             String result = solveWithCVC4(p);
             Matcher m = pat.matcher(result.replace("\n", ""));
             Assert.assertTrue(m.matches());
@@ -133,7 +161,7 @@ public class TestTranslator {
 
     @Test
     public void testZ3() {
-        for(String p : patterns) {
+        for (String p : patterns) {
             String result = solveWithZ3(p);
             Matcher m = pat.matcher(result.replace("\n", ""));
             Assert.assertTrue(m.matches());
@@ -141,5 +169,59 @@ public class TestTranslator {
             LOGGER.info("pattern: {}, result: {}", p, m.group(1));
         }
     }
-    
+
+    @Test
+    public void testConjuntGeneration() {
+        for (String p : patterns) {
+            for (String fmt : Arrays.asList("cvc4", "z3", "z3str2")) {
+                try {
+                    String conjunct = Translator.INSTANCE.translate(fmt, p);
+                    LOGGER.info("format :{}, generated conjunct {}", fmt,
+                            conjunct);
+                } catch (FormatNotAvailableException e) {
+                    Assert.assertTrue(false);
+                    LOGGER.error("error: {}", e.getMessage());
+                } catch (TranslationException e) {
+                    ;
+                }
+            }
+        }
+    }
+
+
+    @Test
+    public void testConstraintGeneration() {
+        for (String p : patterns) {
+            for (String fmt : Arrays.asList("cvc4", "z3", "z3str2")) {
+                try {
+                    String conjunct = Translator.INSTANCE
+                            .translateToConstraint(fmt, p, "v1");
+                    LOGGER.info("format :{}, generated constraint {}", fmt,
+                            conjunct);
+                } catch (FormatNotAvailableException e) {
+                    Assert.assertTrue(false);
+                    LOGGER.error("error: {}", e.getMessage());
+                } catch (TranslationException e) {
+                    ;
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testSimple() {
+        try {
+            String regex = Translator.INSTANCE
+                    .translate("z3", "abc*");
+            String conjunct = Translator.INSTANCE
+                    .tranlateToConjunct("z3", "abc*", "v1");
+            Assert.assertTrue(conjunct.contains(regex));
+        } catch (FormatNotAvailableException e) {
+            Assert.assertTrue(false);
+            LOGGER.error("error: {}", e.getMessage());
+        } catch (TranslationException e) {
+            ;
+        }
+
+    }
 }

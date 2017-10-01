@@ -101,11 +101,10 @@ public enum Translator {
      * @throws FormatNotAvailableException
      * @throws TranslationException
      */
-    public String translateToConjunt(String format, String regex, String
+    public String tranlateToConjunct(String format, String regex, String
             vname) throws
             FormatNotAvailableException, TranslationException {
-
-        return "";
+        return render("conjunct", format, translate(format,regex), vname);
     }
 
     /**
@@ -121,10 +120,14 @@ public enum Translator {
     public String translateToConstraint(String format, String regex, String
             vname) throws
             FormatNotAvailableException, TranslationException {
-        return render(format, translate(format,regex), vname);
+        return render("template", format, translate(format,regex), vname);
     }
 
-    private String render(String format, String smtregex, String vname) {
+    private String render(String template,
+                          String format,
+                          String smtregex,
+                          String
+            vname) {
 
         TemplateLocator locator = ClassPathTemplateLocator.builder(10)
                 .setRootPath(".").setSuffix("smt").build();
@@ -142,7 +145,7 @@ public enum Translator {
         data.put("membership", translators.get(format).getTmap().get
                 (TranslationMap.Element.MEMBERSHIP));
         data.put("smtregex", smtregex);
-        String out = engine.getMustache("template").render(data);
+        String out = engine.getMustache(template).render(data);
 
         return out;
     }
