@@ -11,15 +11,11 @@ regular expressions strings. At the moment, the input formats for
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)][licence]
 [![Language](http://img.shields.io/badge/language-java-brightgreen.svg)][language]
-[![Maven](https://maven-badges.herokuapp.com/maven-central/com.github.hycos/regex2smtlib/badge.svg)][maven]
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.github.hycos/regex2smtlib/badge.svg)][javadoc]
 [![Linux Build Status](https://img.shields.io/travis/hycos/regex2smtlib/master.svg?label=Linux%20build)][travis]
 [![Test Coverage](https://codecov.io/gh/hycos/regex2smtlib/branch/master/graph/badge.svg)][coverage]
 
 [licence]: https://opensource.org/licenses/mit
 [language]: https://www.java.com
-[maven]: https://maven-badges.herokuapp.com/maven-central/com.github.hycos/regex2smtlib
-[javadoc]: http://www.javadoc.io/doc/com.github.hycos/regex2smtlib
 [travis]: https://travis-ci.org/hycos/regex2smtlib
 [coverage]: https://codecov.io/gh/hycos/regex2smtlib
 
