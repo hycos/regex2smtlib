@@ -101,7 +101,7 @@ public enum Translator {
      * @throws FormatNotAvailableException specified format not available
      * @throws TranslationException somehting went wrong during the translation
      */
-    public String tranlateToConjunct(String format, String regex, String
+    public String translateToClause(String format, String regex, String
             vname) throws
             FormatNotAvailableException, TranslationException {
         return render("conjunct", format, translate(format,regex), vname);

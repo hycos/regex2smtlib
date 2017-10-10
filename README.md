@@ -72,13 +72,13 @@ The `Translator` class has two other member functions which may be useful:
 ```java
 // generate SMT-LIB regex string only
 String regexsmt = Translator.INSTANCE.translate("z3", "abc*");
-// generate conjunct
-String conjunct = Translator.INSTANCE.translateToConjunt("z3", "abc*", "v1");
+// generate clause
+String clause = Translator.INSTANCE.translateToClause("z3", "abc*", "v1");
 ```
 
 The first line below corresponds to the value assigned to `regexsmt` after the
 call to `translate()` in the snippet above, whereas the second line corresponds
-to the value assigned to the variable `conjunct` after the call to
+to the value assigned to the variable `clause` after the call to
 `translateToConjunct()`.
 
 ```bash

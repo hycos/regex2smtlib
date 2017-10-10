@@ -171,7 +171,7 @@ public class TestTranslator {
     }
 
     @Test
-    public void testConjuntGeneration() {
+    public void testClauseGeneration() {
         for (String p : patterns) {
             for (String fmt : Arrays.asList("cvc4", "z3", "z3str2")) {
                 try {
@@ -214,7 +214,7 @@ public class TestTranslator {
             String regex = Translator.INSTANCE
                     .translate("z3", "abc*");
             String conjunct = Translator.INSTANCE
-                    .tranlateToConjunct("z3", "abc*", "v1");
+                    .translateToClause("z3", "abc*", "v1");
             Assert.assertTrue(conjunct.contains(regex));
         } catch (FormatNotAvailableException e) {
             Assert.assertTrue(false);
