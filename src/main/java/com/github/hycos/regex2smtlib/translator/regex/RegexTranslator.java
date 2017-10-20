@@ -75,10 +75,10 @@ public class RegexTranslator extends AbstractRegexTranslator {
         if(tmap.has(ALLCHAR)) {
             return tmap.get(ALLCHAR);
         } else {
-            char from = '!';
-            char to = '}';
-            String any = "(" + tmap.get(RANGE) + " \"" + from + "\" \"" + to
-                    + "\")";
+            char from = 0;
+            char to = 255;
+            String any = "(" + tmap.get(RANGE) + " \"" + escaper.charEscape(from) + "\"" +
+                    " \"" + escaper.charEscape(to) + "\")";
             return any;
         }
     }

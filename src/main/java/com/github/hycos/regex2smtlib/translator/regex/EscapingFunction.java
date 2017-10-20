@@ -27,5 +27,6 @@
 package com.github.hycos.regex2smtlib.translator.regex;
 
 public interface EscapingFunction {
+    String charEscape(int c);
     String escape(String input);
 }

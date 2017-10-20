@@ -17,7 +17,7 @@
         <gpgplugin.version>1.6</gpgplugin.version>
         <javadocplugin.version>2.10.4</javadocplugin.version>
         <slf4j.version>1.7.25</slf4j.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>5.0.0</junit.version>
         <commonslang.version>3.6</commonslang.version>
         <trimou.version>2.3.0.Final</trimou.version>
         <testcontainers.version>1.4.2</testcontainers.version>
@@ -145,8 +145,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>

@@ -26,9 +26,19 @@
 
 package com.github.hycos.regex2smtlib.translator.regex;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Objects;
 
 public class SmtEscape implements EscapingFunction {
+
+    final static Logger LOGGER = LoggerFactory.getLogger(SmtEscape.class);
+
+    @Override
+    public String charEscape(int c) {
+        return String.format("\\x%02x", c);
+    }
 
     @Override
     public String escape(String input) {
@@ -39,14 +49,8 @@ public class SmtEscape implements EscapingFunction {
 
         char carr[] = input.toCharArray();
         for(int k = 0; k < carr.length; k ++) {
-            char c = carr[k];
-            if(c == '\"') {
-                out.append("\"");
-            }
-            out.append(c);
+            out.append(charEscape(carr[k]));
         }
         return out.toString();
-
-
     }
 }
