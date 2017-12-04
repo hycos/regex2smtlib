@@ -38,6 +38,7 @@ import org.snt.inmemantlr.tree.ParseTree;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -49,7 +50,7 @@ public enum RegexParser {
 
     final static Logger LOGGER = LoggerFactory.getLogger(RegexParser.class);
 
-    private static Set<String> filter = new HashSet<String>(Arrays.asList(
+    private static Set<String> filter = new HashSet<>(Arrays.asList(
             new String[]{"alternation", "intersection",
             "expr", "literal",
             "quantifier", "atom", "letter", "number", "element",
@@ -58,9 +59,7 @@ public enum RegexParser {
 
     private static GenericParser gp = null;
     private static DefaultTreeListener dlist = null;
-    private static String gfile = RegexParser.class.getClassLoader().getResource
-            ("Regex.g4")
-            .getFile();
+    private static String gfile = load();
 
 
     static {
@@ -70,7 +69,7 @@ public enum RegexParser {
         try {
             gp = new GenericParser(f);
         } catch (FileNotFoundException e) {
-            LOGGER.debug(e.getMessage());
+            LOGGER.error(e.getMessage());
             System.exit(-1);
         }
 
@@ -80,11 +79,26 @@ public enum RegexParser {
         try {
             gp.compile();
         } catch (CompilationException e) {
-            LOGGER.debug(e.getMessage());
+            LOGGER.error(e.getMessage());
             System.exit(-1);
         }
     }
 
+
+    private static String load () {
+        URL resource = RegexParser.class.getClassLoader().getResource
+                ("Regex.g4");
+
+        if(resource == null)
+            RegexParser.class.getClassLoader().getResource
+                    ("com/github/hycos/regex2smtlib/src/main/resources/Regex" +
+                            ".g4");
+        if(resource == null) {
+            LOGGER.error("could not get grammar definition");
+            System.exit(-1);
+        }
+        return resource.getFile();
+    }
 
     /**
      * parse regex string and return corresponding parse tree
