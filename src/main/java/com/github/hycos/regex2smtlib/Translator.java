@@ -130,7 +130,8 @@ public enum Translator {
             vname) {
 
         TemplateLocator locator = ClassPathTemplateLocator.builder(10)
-                .setRootPath(".").setSuffix("smt").build();
+                .setRootPath("./com/github/hycos/regex2smtlib").setSuffix
+                        ("smt").build();
 
 
         MustacheEngine engine = MustacheEngineBuilder
