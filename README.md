@@ -37,7 +37,7 @@ using the following dependency in the `pom.xml` file.
 <dependency>
     <groupId>com.github.hycos</groupId>
     <artifactId>regex2smtlib</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 </dependency>
 ```
 
