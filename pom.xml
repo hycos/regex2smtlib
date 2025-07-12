@@ -23,7 +23,7 @@
         <javadocplugin.version>3.0.1</javadocplugin.version>
         <slf4j.version>1.7.25</slf4j.version>
         <junit.version>5.0.1</junit.version>
-        <commonslang.version>3.6</commonslang.version>
+        <commonslang.version>3.18.0</commonslang.version>
         <trimou.version>2.5.0.Final</trimou.version>
         <testcontainers.version>1.8.3</testcontainers.version>
         <jacoco.version>0.8.1</jacoco.version>
